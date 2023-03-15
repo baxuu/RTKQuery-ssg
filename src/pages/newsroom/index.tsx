@@ -21,30 +21,12 @@ export default function Newsroom() {
   );
 }
 
-export const getStaticProps = wrapper.getStaticProps(
-  (store) => async (context) => {
-    store.dispatch(getMediumPosts.initiate());
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  store.dispatch(getMediumPosts.initiate());
 
-    await Promise.all(store.dispatch(getRunningQueriesThunk()));
+  await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
-    return {
-      props: {},
-    };
-  }
-);
-
-// const Newsroom: NextPage<GetMediumPosts> = ({ items }) => {
-//   return <Blog news={items} />;
-// };
-
-// export const getStaticProps: GetStaticProps<GetMediumPosts> = async () => {
-//   const items = await fetchMediumPosts();
-
-//   return {
-//     props: {
-//       items,
-//     },
-//   };
-// };
-
-// export default Newsroom;
+  return {
+    props: {},
+  };
+});

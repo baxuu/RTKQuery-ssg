@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { convert } from 'html-to-text';
+import { convertToSlug, formatDate } from '@/helpers/helpers';
 
 import Link from 'next/link';
 
@@ -11,16 +12,6 @@ interface CardProps {
 }
 
 const Card = ({ article }: CardProps) => {
-  console.log('siema', article.thumbnail);
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
   const excerpt = convert(article.description, {
     baseElements: { selectors: ['p'] }, // only select from <p> elements
     wordwrap: false, // don't add linebreaks
@@ -34,11 +25,7 @@ const Card = ({ article }: CardProps) => {
     excerpt.length > 200 ? excerpt.substring(0, 200) + '...' : excerpt;
 
   return (
-    <Link
-      href={`/newsroom/${article.title
-        .toLowerCase()
-        .replace(/[^a-zA-Z0-9]+/g, '-')}`}
-    >
+    <Link href={`/newsroom/${convertToSlug(article.title)}`}>
       <div className="mx-auto h-full w-full overflow-hidden rounded-lg bg-white shadow-lg">
         <div className="relative aspect-video w-full">
           <Image

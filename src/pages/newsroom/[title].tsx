@@ -11,6 +11,7 @@ import Post from '@/components/Blog/Post';
 import { useRouter } from 'next/dist/client/router';
 import BackToBar from '@/components/BackToBar';
 import Blog from '@/components/Blog';
+import { convertToSlug, convertFromSlug } from '@/helpers/helpers';
 
 export default function Article() {
   const router = useRouter();
@@ -19,13 +20,7 @@ export default function Article() {
 
   const { data, isLoading, isError } = useGetMediumPostsQuery();
 
-  const post = data?.find(
-    (p) =>
-      p.title
-        .toLowerCase()
-        .replace(/[^\w\s]/gi, '')
-        .replace(/ /g, '-') === title
-  );
+  const post = data?.find((p) => convertFromSlug(p.title) === title);
 
   return (
     <>
@@ -42,26 +37,22 @@ export default function Article() {
   );
 }
 
-export const getStaticProps = wrapper.getStaticProps(
-  (store) => async (context) => {
-    store.dispatch(getMediumPosts.initiate());
+export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+  store.dispatch(getMediumPosts.initiate());
 
-    const data = await Promise.all(store.dispatch(getRunningQueriesThunk()));
+  await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
-    return {
-      props: {},
-    };
-  }
-);
+  return {
+    props: {},
+  };
+});
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const store = makeStore();
   const result = await store.dispatch(getMediumPosts.initiate());
 
   const paths = result.data?.map((post: PostProps) => {
-    const path = `/newsroom/${post.title
-      .toLowerCase()
-      .replace(/[^a-zA-Z0-9]+/g, '-')}`;
+    const path = `/newsroom/${convertToSlug(post.title)}`;
     return path;
   });
 
