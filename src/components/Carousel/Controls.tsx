@@ -1,6 +1,6 @@
-import React from "react";
-import useBreakpoints from "@/hooks/useBreakpoint";
-import Icon from "@/icons";
+import React, { useMemo } from 'react';
+import useBreakpoints from '@/hooks/useBreakpoint';
+import Icon from '@/icons';
 
 type ControlsProps = {
   length: number;
@@ -20,21 +20,23 @@ const Controls = ({
   const breakpoint = useBreakpoints();
 
   const itemsToRender =
-    breakpoint === "lg" ? desktop : breakpoint === "md" ? tablet : mobile;
+    breakpoint === 'lg' ? desktop : breakpoint === 'md' ? tablet : mobile;
 
   const pages = Math.ceil(length / itemsToRender);
 
-  const pageButtons = Array.from(Array(pages).keys()).map((i) => (
-    <button
-      key={i}
-      className={`mx-2 h-2.5 w-2.5 rounded-full ${
-        i === activeIndex / itemsToRender
-          ? "bg-blue-900"
-          : "bg-blue-300 hover:bg-blue-400"
-      }`}
-      onClick={() => setActiveIndex(i * itemsToRender)}
-    ></button>
-  ));
+  const pageButtons = useMemo(() => {
+    return Array.from(Array(pages).keys()).map((i) => (
+      <button
+        key={i}
+        className={`mx-2 h-2.5 w-2.5 rounded-full ${
+          i === activeIndex / itemsToRender
+            ? 'bg-blue-900'
+            : 'bg-blue-300 hover:bg-blue-400'
+        }`}
+        onClick={() => setActiveIndex(i * itemsToRender)}
+      ></button>
+    ));
+  }, [activeIndex, itemsToRender, pages, setActiveIndex]);
 
   return (
     <div className="mt-10 flex items-center justify-center text-center">
@@ -43,7 +45,7 @@ const Controls = ({
         onClick={() => setActiveIndex(activeIndex - itemsToRender)}
         disabled={activeIndex === 0}
         style={{
-          cursor: activeIndex === 0 ? "default" : "pointer",
+          cursor: activeIndex === 0 ? 'default' : 'pointer',
           opacity: activeIndex === 0 ? 0.5 : 1,
         }}
       >
@@ -63,7 +65,7 @@ const Controls = ({
         onClick={() => setActiveIndex(activeIndex + itemsToRender)}
         disabled={activeIndex + itemsToRender >= length}
         style={{
-          cursor: activeIndex + itemsToRender >= length ? "default" : "pointer",
+          cursor: activeIndex + itemsToRender >= length ? 'default' : 'pointer',
           opacity: activeIndex + itemsToRender >= length ? 0.5 : 1,
         }}
       >

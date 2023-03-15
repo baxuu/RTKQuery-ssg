@@ -1,7 +1,7 @@
-import { useState } from "react";
-import Slide from "./Slide";
-import Controls from "./Controls";
-import useBreakpoints from "@/hooks/useBreakpoint";
+import { useState } from 'react';
+import Slide from './Slide';
+import Controls from './Controls';
+import useBreakpoints from '@/hooks/useBreakpoint';
 
 type CarouselProps<T> = {
   items: T[];
@@ -16,7 +16,7 @@ const Carousel = <T,>({ items, renderItem, itemsToShow }: CarouselProps<T>) => {
 
   const breakpoint = useBreakpoints();
   const itemsToRender =
-    breakpoint === "lg" ? desktop : breakpoint === "md" ? tablet : mobile;
+    breakpoint === 'lg' ? desktop : breakpoint === 'md' ? tablet : mobile;
 
   return (
     <div className="relative">
@@ -32,9 +32,9 @@ const Carousel = <T,>({ items, renderItem, itemsToShow }: CarouselProps<T>) => {
               key={index}
               width={`${100 / itemsToRender}%`}
               style={{
-                paddingRight: "20px",
+                paddingRight: '20px',
                 paddingLeft:
-                  itemsToRender % 1 !== 0 && index !== 0 ? undefined : "20px",
+                  itemsToRender % 1 !== 0 && index !== 0 ? undefined : '20px',
               }}
             >
               {renderItem(item)}
