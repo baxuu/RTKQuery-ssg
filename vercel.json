@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/backstage/:match*",
+      "destination": "https://sso-roland.vercel.app/:match*"
+    }
+  ]
+}
