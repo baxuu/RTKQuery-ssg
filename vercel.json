@@ -1,9 +1,0 @@
-// {
-//   "rewrites": [
-//     {
-//       "source": "/backstagee/:path*",
-//       "destination": "https://sso-roland.vercel.app/:path*"
-//     }
-//   ]
-// }
-// // 
