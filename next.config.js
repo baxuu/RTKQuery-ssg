@@ -4,7 +4,7 @@ const nextConfig = {
   rewrites: async () => [
     {
       source: '/backstage/:slug*',
-      destination: 'https://sso-roland.vercel.app/:slug*',
+      destination: 'https://sso-roland.vercel.app/:slug*/',
       basePath: false,
     },
   ],
