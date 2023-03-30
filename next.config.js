@@ -1,11 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  basePath: '/docs',
+
   rewrites: async () => [
     {
       source: '/backstage/:slug*',
-      destination: 'https://sso-roland.vercel.app/:slug*/',
-      basePath: false,
+      destination: 'https://sso-roland.vercel.app/:slug*',
     },
   ],
   images: {
