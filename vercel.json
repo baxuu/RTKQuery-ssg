@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/backstage/:slug*",
-      "destination": "https://https://anothertomorrow.co/"
-    }
-  ]
-}
